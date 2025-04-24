@@ -1,4 +1,4 @@
-import 'package:fittrack/style/theme.dart';
+import 'package:fittrack/core/config/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'FitTrack',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.system, // Automatically use light or dark based on system settings
+      themeMode: ThemeMode.system,
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Set the status bar style based on the current theme
     final brightness = Theme.of(context).brightness;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
