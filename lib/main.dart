@@ -1,45 +1,28 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fittrack/core/config/theme.dart';
-import 'package:flutter/services.dart';
+import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_bloc.dart';
+import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(MyApp());
-}
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FitTrack',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
-      home: MyHomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: brightness == Brightness.light
-          ? Brightness.dark
-          : Brightness.light,
-      systemNavigationBarColor:
-      brightness == Brightness.light ? Colors.white : Colors.black,
-      systemNavigationBarIconBrightness: brightness == Brightness.light
-          ? Brightness.dark
-          : Brightness.light,
-    ));
-
-    return Scaffold(
-      body: Center(
-        child: Text("Hello, Flutter!"),
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => SignInBloc()),
+      ],
+      child: MaterialApp(
+        title: 'FitTrack',
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.system,
+        debugShowCheckedModeBanner: false,
+        home: SignInScreen(),
       ),
-    );
-  }
+    ),
+  );
+
 }
