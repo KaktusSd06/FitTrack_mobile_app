@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fittrack/presentation/dialogs/lib/presentation/dialogs/error_dialog.dart';
-import '../../../dialogs/lib/presentation/dialogs/confirmation_dialog.dart';
+import 'package:fittrack/presentation/dialogs/lib/presentation/dialogs/confirmation_dialog.dart';
 import '../../../widgets/profile_action_bloc.dart';
 import '../../../widgets/user_avatar.dart';
 import '../sign_in/bloc/sign_in_bloc.dart';
@@ -29,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _profileBloc.add(LoadProfile());
 
-    // Сохраняем последнее успешное состояние для отображения
     _profileBloc.stream.listen((state) {
       if (state is ProfileLoaded) {
         setState(() {
@@ -113,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const TextSpan(text: '\n'),
                       TextSpan(
                         text: (state.displayName != null &&
-                            state.displayName!.split(' ').length > 0)
+                            state.displayName!.split(' ').isNotEmpty)
                             ? state.displayName!.split(' ')[0]
                             : '',
                         style: Theme
@@ -126,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 )
               ],
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -142,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         : Colors.white.withAlpha((0.1 * 255).round()),
                     blurRadius: 20,
                     spreadRadius: 2,
-                    offset: Offset(0, 0),
+                    offset: const Offset(0, 0),
                   ),
                 ],
               ),
@@ -151,11 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       vertical: 8, horizontal: 16),
                   child: Column(
                     children: [
-                      ActionBlock(
-                        svgPath: "assets/icons/edit_icon.svg",
-                        text: 'Редагувати профіль',
-                        onTap: () {},
-                      ),
                       ActionBlock(
                         svgPath: "assets/icons/history.svg",
                         text: 'Історія покупок',
@@ -167,78 +161,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           _sendEmail(context);
                         },
+                        isLastItem: false,
+                      ),
+                      ActionBlock(
+                        svgPath: "assets/icons/exit.svg",
+                        text: 'Вийти з застосунку',
+                        onTap: () {
+                          final confirmationDialog = ConfirmationDialog();
+                          confirmationDialog
+                              .showConfirmationDialog(
+                              context,
+                              "Підтвердження виходу",
+                              "Ви впевнені, що хочете вийти з застосунку?"
+                          ).then((confirmed) {
+                            if (confirmed) {
+                              context.read<SignInBloc>().add(
+                                  SignOutEvent(context: context));
+                            }
+                          });
+                        },
+                      ),
+                      ActionBlock(
+                        svgPath: "assets/icons/delete.svg",
+                        text: 'Видалити профіль',
+                        onTap: () {
+                          final confirmationDialog = ConfirmationDialog();
+                          confirmationDialog
+                              .showConfirmationDialog(
+                            context,
+                            "Підтвердження видалення",
+                            "Ви впевнені, що бажаєте видалити профіль? Всі дані буде втрачено.",
+                          )
+                              .then((confirmed) {
+                            if (confirmed) {
+                              _profileBloc.add(DeleteAccount());
+                            }
+                          });
+                        },
                         isLastItem: true,
                       ),
                     ],
                   )
               ),
             ),
-            SizedBox(height: 16),
-            Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Theme
-                      .of(context)
-                      .cardColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme
-                          .of(context)
-                          .brightness == Brightness.light
-                          ? Colors.black.withAlpha((0.1 * 255).round())
-                          : Colors.white.withAlpha((0.1 * 255).round()),
-                      blurRadius: 20,
-                      spreadRadius: 2,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8, horizontal: 16),
-                    child: Column(
-                        children: [
-                          ActionBlock(
-                            svgPath: "assets/icons/exit.svg",
-                            text: 'Вийти з застосунку',
-                            onTap: () {
-                              final confirmationDialog = ConfirmationDialog();
-                              confirmationDialog
-                                  .showConfirmationDialog(
-                                  context,
-                                  "Підтвердження виходу",
-                                  "Ви впевнені, що хочете вийти з застосунку?"
-                              ).then((confirmed) {
-                                if (confirmed) {
-                                  context.read<SignInBloc>().add(
-                                      SignOutEvent(context: context));
-                                }
-                              });
-                            },
-                          ),
-                          ActionBlock(
-                            svgPath: "assets/icons/delete.svg",
-                            text: 'Видалити профіль',
-                            onTap: () {
-                              final confirmationDialog = ConfirmationDialog();
-                              confirmationDialog
-                                  .showConfirmationDialog(
-                                context,
-                                "Підтвердження видалення",
-                                "Ви впевнені, що бажаєте видалити профіль? Всі дані буде втрачено.",
-                              )
-                                  .then((confirmed) {
-                                if (confirmed) {
-                                  _profileBloc.add(DeleteAccount());
-                                }
-                              });
-                            },
-                            isLastItem: true,
-                          ),
-                        ]
-                    )
-                )
-            )
           ],
         ),
       ),
@@ -271,7 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           listener: (context, state) {
             if (state is AccountDeleted) {
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => SignInScreen()),
+                MaterialPageRoute(builder: (_) => const SignInScreen()),
                     (route) => false,
               );
             } else if (state is AccountDeletionError) {
@@ -291,12 +256,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
           },
           builder: (context, state) {
-            // При загрузке показываем индикатор
             if (state is ProfileLoading && _lastProfileState == null) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // Если у нас есть загруженное состояние, отображаем его
             if (state is ProfileLoaded || _lastProfileState is ProfileLoaded) {
               ProfileLoaded profileData = (state is ProfileLoaded)
                   ? state
@@ -305,7 +268,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return _buildProfileContent(profileData);
             }
 
-            // Если состояние ошибки и нет предыдущего состояния
             if (state is ProfileError && _lastProfileState == null) {
               return Center(
                 child: SvgPicture.asset(
@@ -316,7 +278,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             }
 
-            // Если мы не смогли найти состояние для отображения
             if (_lastProfileState == null) {
               return const Center(child: CircularProgressIndicator());
             } else if (_lastProfileState is ProfileLoaded) {
