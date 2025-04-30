@@ -23,3 +23,5 @@ class SignInFailure extends SignInState {
 }
 
 class SignInTermError extends SignInState {}
+
+class SignOutState extends SignInState {}

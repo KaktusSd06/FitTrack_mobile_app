@@ -20,3 +20,12 @@ class SignInWithGoogle extends SignInEvent {
 class ShowTermError extends SignInEvent {}
 
 class ClearTermError extends SignInEvent {}
+
+class SignOutEvent extends SignInEvent {
+  final BuildContext context;
+
+  const SignOutEvent({required this.context});
+
+  @override
+  List<Object?> get props => [context];
+}
