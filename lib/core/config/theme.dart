@@ -13,46 +13,51 @@ const Color black = Color(0xFF000000);
 
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  primaryColor: Color(0xFFE48100),
-  hintColor: Color(0xFFC6C1B9),
-  scaffoldBackgroundColor: Color(0xFFFFFFFF),
-  cardColor: Color(0xFFF9F9F9),
-  progressIndicatorTheme: ProgressIndicatorThemeData(
-    color: Color(0xFFE48100),
+  scaffoldBackgroundColor: white,
+  cardColor: gray1,
+  hintColor: const Color(0xFFC6C1B9),
+  progressIndicatorTheme: const ProgressIndicatorThemeData(color: fulvous),
+  colorScheme: ColorScheme.light(
+    primary: fulvous,
+    secondary: gray4,
+    background: white,
+    surface: gray1,
+    onPrimary: white,
+    onSecondary: black,
+    onBackground: black,
+    onSurface: black,
   ),
-
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
     displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
     displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
     headlineMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
     headlineSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
   ),
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color(0xFFE48100),
-    textTheme: ButtonTextTheme.primary,
-  ),
 );
 
-// Define dark theme
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  primaryColor: Color(0xFFE48100),
-  hintColor: Color(0xFF3A3A37),
-  scaffoldBackgroundColor: Color(0xFF000000),
-  cardColor: Color(0xFF201F1C),
-  progressIndicatorTheme: ProgressIndicatorThemeData(
-    color: Color(0xFFE48100),
+  scaffoldBackgroundColor: black,
+  cardColor: const Color(0xFF201F1C),
+  hintColor: const Color(0xFF4A4A47),
+  progressIndicatorTheme: const ProgressIndicatorThemeData(color: fulvous),
+  colorScheme: ColorScheme.dark(
+    primary: fulvous,
+    secondary: gray4,
+    background: black,
+    surface: gray6,
+    onPrimary: black,
+    onSecondary: black,
+    onBackground: white,
+    onSurface: white,
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
     displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
     displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
     headlineMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
     headlineSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
   ),
-  buttonTheme: ButtonThemeData(
-    buttonColor: Color(0xFFE48100),
-    textTheme: ButtonTextTheme.primary,
-  ),
 );
+
