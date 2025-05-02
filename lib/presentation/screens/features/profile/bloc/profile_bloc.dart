@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../../../../services/auth_service.dart';
+import '../../../../../data/services/auth_service.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
 
@@ -37,7 +37,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           emit(const AccountDeletionError("Користувач не авторизований. Увійдіть, щоб видалити акаунт."));
         }
       } catch (e) {
-        emit(AccountDeletionError("Не вдалося видалити акаунт"));
+        emit(const AccountDeletionError("Не вдалося видалити акаунт"));
       }
     });
   }
