@@ -2,7 +2,7 @@ import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_even
 import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../services/auth_service.dart';
+import '../../../../../data/services/auth_service.dart';
 import '../../../home_screen.dart';
 import '../sign_in_screen.dart';
 

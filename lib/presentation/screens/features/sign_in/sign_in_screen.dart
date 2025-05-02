@@ -1,12 +1,9 @@
-import 'package:fittrack/presentation/screens/features/sign_in/select_birthday_date_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sign_button/constants.dart';
 import 'package:sign_button/create_button.dart';
-import '../../../../../core/config/theme.dart' as app_colors;
-import 'package:fittrack/presentation/dialogs/lib/presentation/dialogs/error_dialog.dart';
+import '../../../dialogs/error_dialog.dart';
 import '../../home_screen.dart';
 import 'bloc/sign_in_bloc.dart';
 import 'bloc/sign_in_event.dart';
@@ -98,7 +95,6 @@ class SignInScreenContentState extends State<_SignInScreenContent> {
                   SvgPicture.asset(
                     "assets/images/sign_in_image.svg",
                     width: 300,
-                    //height: 56,
                   ),
 
                   const SizedBox(height: 44),
