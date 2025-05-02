@@ -1,16 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fittrack/core/config/secure_storage_keys.dart';
 import 'package:fittrack/core/config/theme.dart';
+import 'package:fittrack/presentation/screens/features/individual_training/bloc/individual_training_bloc.dart';
 import 'package:fittrack/presentation/screens/features/profile/bloc/profile_bloc.dart';
+import 'package:fittrack/presentation/screens/features/set/bloc/set_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.dart';
 import 'package:fittrack/presentation/screens/home_screen.dart';
-import 'package:fittrack/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/svg.dart';
 import 'dart:async';
+
+import 'data/services/auth_service.dart';
+import 'data/services/exercise_service.dart';
+import 'data/services/individual_training_service.dart';
+import 'data/services/set_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +25,20 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => SignInBloc()),
-        BlocProvider(create: (_) => ProfileBloc())
+        BlocProvider(create: (_) => ProfileBloc()),
+        BlocProvider(
+          create: (context) =>
+              IndividualTrainingBloc(
+                trainingService: IndividualTrainingService(
+                ),
+              ),
+        ),
+        BlocProvider<SetBloc>(
+          create: (context) => SetBloc(
+            exerciseService: ExerciseService(),
+            setService: SetService(),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'FitTrack',
@@ -36,7 +54,7 @@ Future<void> main() async {
             } else if (snapshot.hasError) {
               return const Center(child: Text('Помилка завантаження'));
             } else {
-              return snapshot.data ?? SignInScreen();
+              return snapshot.data ?? const SignInScreen();
             }
           },
         ),
@@ -46,11 +64,11 @@ Future<void> main() async {
 }
 
 Widget splash() {
-  return SplashScreen();
+  return const SplashScreen();
 }
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -161,7 +179,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                         shadows: [
                           Shadow(
                             blurRadius: 10.0,
-                            color: Colors.black.withOpacity(0.3),
+                            color: Colors.black.withAlpha((0.3 * 255).round()),
                             offset: const Offset(2.0, 2.0),
                           ),
                         ],
@@ -172,7 +190,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       "Шлях до кращої версії себе",
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withAlpha((0.9 * 255).round()),
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -188,19 +206,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 }
 
 Future<Widget> checkLoggedInStatus() async {
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-  final idToken = await _secureStorage.read(key: SecureStorageKeys.idToken);
-  final AuthService _authService = AuthService();
+  const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  final idToken = await secureStorage.read(key: SecureStorageKeys.idToken);
+  final AuthService authService0 = AuthService();
 
   if (idToken != null) {
-    final storedDateStr = await _secureStorage.read(key: SecureStorageKeys.refreshTokenDate);
+    final storedDateStr = await secureStorage.read(key: SecureStorageKeys.refreshTokenDate);
 
     if (storedDateStr != null) {
       final storedDate = DateTime.tryParse(storedDateStr);
       final now = DateTime.now();
 
       if (storedDate != null && now.difference(storedDate).inDays > 7) {
-        await _authService.signOut();
+        await authService0.signOut();
       }
     }
 
@@ -208,12 +226,11 @@ Future<Widget> checkLoggedInStatus() async {
       final authService = AuthService();
       await authService.refreshTokenIfNeeded();
     } catch (e) {
-      print("Помилка при оновленні токена: $e");
-      await _authService.signOut();
+      await authService0.signOut();
     }
 
-    return HomeScreen();
+    return const HomeScreen();
   } else {
-    return SignInScreen();
+    return const SignInScreen();
   }
 }
