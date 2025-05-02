@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fittrack/core/config/secure_storage_keys.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -9,8 +7,7 @@ import 'package:fittrack/core/config/config.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-
+  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   Future<http.Response> loginWithGoogle({
     required String firstName,
@@ -37,13 +34,13 @@ class AuthService {
       final responseBody = jsonDecode(response.body);
       final accessToken = responseBody[SecureStorageKeys.accessToken];
       final refreshToken = responseBody[SecureStorageKeys.refreshToken];
+      final userId = responseBody[SecureStorageKeys.userId];
 
       _secureStorage.write(key: SecureStorageKeys.accessToken, value: accessToken);
       _secureStorage.write(key: SecureStorageKeys.refreshToken, value: refreshToken);
-      print("User successfully added");
+      _secureStorage.write(key: SecureStorageKeys.userId, value: userId);
       return response;
     } else {
-      print("Login failed: ${response.body}");
       throw Exception('Помилка входу: ${response.statusCode}');
     }
   }
@@ -88,8 +85,7 @@ class AuthService {
         return null;
       }
     } catch (e) {
-      print("Помилка входу через Google: $e");
-      return null;
+      throw Exception('Login with Google Error');
     }
   }
 
@@ -139,7 +135,7 @@ class AuthService {
       await GoogleSignIn().signOut();
       await _secureStorage.deleteAll();
     } catch (e) {
-      print("Помилка виходу: $e");
+      throw Exception('Login error');
     }
   }
 

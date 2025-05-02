@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class ErrorDialog {
   void showErrorDialog(BuildContext context, String title, String message) {
@@ -24,7 +23,7 @@ class ErrorDialog {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child: const Text(
                 "Закрити",
                 style: TextStyle(color: CupertinoColors.destructiveRed),
               ),

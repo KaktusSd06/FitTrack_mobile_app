@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:fittrack/presentation/screens/features/individual_training/individual_training_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import '../../services/auth_service.dart';
-import 'package:fittrack/presentation/dialogs/lib/presentation/dialogs/error_dialog.dart';
+import '../../data/services/auth_service.dart';
+import '../dialogs/error_dialog.dart';
 import 'features/profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget{
@@ -55,9 +56,9 @@ class HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     const Center(child: Text("Головна сторінка")),
-    const Center(child: Text("Тренування")),
+    const IndividualTrainingScreen(),
     const Center(child: Text("Мій клуб")),
-    ProfileScreen(),
+    const ProfileScreen(),
   ];
 
   @override
@@ -79,7 +80,7 @@ class HomeScreenState extends State<HomeScreen> {
           tabBackgroundColor: Theme.of(context).primaryColor,
           color: _iconColor(-1),
           activeColor: _iconColor(_selectedIndex),
-          padding: EdgeInsets.symmetric(horizontal: 19, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 12),
           tabs: [
             GButton(
               icon: Icons.circle,
