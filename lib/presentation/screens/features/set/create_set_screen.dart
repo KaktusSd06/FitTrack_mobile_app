@@ -13,7 +13,6 @@ class CreateSetScreen extends StatefulWidget {
   final String individualTrainingId;
   final DateTime selectedDate;
 
-
   const CreateSetScreen({
     super.key,
     required this.exerciseId,

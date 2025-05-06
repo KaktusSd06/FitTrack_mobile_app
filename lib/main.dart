@@ -1,11 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fittrack/core/config/secure_storage_keys.dart';
 import 'package:fittrack/core/config/theme.dart';
+import 'package:fittrack/data/services/goal_service.dart';
+import 'package:fittrack/data/services/meal_service.dart';
+import 'package:fittrack/data/services/weight_service.dart';
+import 'package:fittrack/presentation/screens/features/goal/bloc/goal_bloc.dart';
 import 'package:fittrack/presentation/screens/features/individual_training/bloc/individual_training_bloc.dart';
+import 'package:fittrack/presentation/screens/features/meal/bloc/meal_bloc.dart';
+import 'package:fittrack/presentation/screens/features/meal/chart/bloc/meal_chart_bloc.dart';
+import 'package:fittrack/presentation/screens/features/page_with_indicators/bloc/page_with_indicators_bloc.dart';
 import 'package:fittrack/presentation/screens/features/profile/bloc/profile_bloc.dart';
 import 'package:fittrack/presentation/screens/features/set/bloc/set_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.dart';
+import 'package:fittrack/presentation/screens/features/weight/bloc/weight_bloc.dart';
 import 'package:fittrack/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +21,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:async';
 
 import 'data/services/auth_service.dart';
+import 'data/services/calories_statistics_service.dart';
 import 'data/services/exercise_service.dart';
 import 'data/services/individual_training_service.dart';
 import 'data/services/set_service.dart';
@@ -37,6 +46,34 @@ Future<void> main() async {
           create: (context) => SetBloc(
             exerciseService: ExerciseService(),
             setService: SetService(),
+          ),
+        ),
+        BlocProvider<PageWithIndicatorsBloc>(
+          create: (context) => PageWithIndicatorsBloc(
+            mealService: MealService(),
+            goalService: GoalService(),
+            weightModel: WeightService(),
+          ),
+        ),
+        BlocProvider<MealBloc>(
+          create: (context) => MealBloc(
+            mealService: MealService(),
+            goalService: GoalService(),
+          ),
+        ),
+        BlocProvider<GoalBloc>(
+          create: (context) => GoalBloc(
+            goalService: GoalService(),
+          ),
+        ),
+        BlocProvider<WeightBloc>(
+          create: (context) => WeightBloc(
+            weightService: WeightService(),
+          ),
+        ),
+        BlocProvider<MealChartBloc>(
+          create: (context) => MealChartBloc(
+            statisticsService: CaloriesStatisticsService(),
           ),
         ),
       ],
