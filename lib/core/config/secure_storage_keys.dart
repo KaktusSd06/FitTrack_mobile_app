@@ -4,4 +4,5 @@ class SecureStorageKeys {
   static const refreshToken = 'refreshToken';
   static const refreshTokenDate = 'refreshTokenDate';
   static const userId = 'userId';
+  static const stepGoal = 'stepGoal';
 }

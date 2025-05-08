@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../dialogs/error_dialog.dart';
 import '../../../widgets/features/kcal/kcal_home_screen_widget.dart';
+import '../../../widgets/step_counter_widget.dart';
 
 class PageWithIndicatorsScreen extends StatefulWidget{
   const PageWithIndicatorsScreen({super.key});
@@ -70,14 +71,18 @@ class PageWithIndicatorsScreenState extends State<PageWithIndicatorsScreen>{
             else if(state is PageWithIndicatorsLoaded){
               return Column(
                 children: [
-                  KcalHomeScreenWidget(goal: state.goal, kcal: state.kcalToday,),
+                  const StepCounterWidget(),
                   const SizedBox(height: 12,),
                   WeightHomeScreenWidget(weight: state.weight),
+                  const SizedBox(height: 12,),
+                  KcalHomeScreenWidget(goal: state.goal, kcal: state.kcalToday,),
+
+
                   // GestureDetector(
                   //   onTap: () {
-                  //     Navigator.push(context, MaterialPageRoute(builder: (context) => WeightScreen()));
+                  //     Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterScreen()));
                   //   },
-                  //   child: Text("weight"),
+                  //   child: Text("step"),
                   // )
                 ],
               );
