@@ -16,7 +16,7 @@ class MealChartLoaded extends MealChartState {
   final CaloriesStatistics statistics;
   final DateTime fromDate;
   final DateTime toDate;
-  final CaloriesGroupBy groupBy;
+  final PeriodType groupBy;
 
   MealChartLoaded({
     required this.statistics,
@@ -32,7 +32,7 @@ class MealChartLoaded extends MealChartState {
     CaloriesStatistics? statistics,
     DateTime? fromDate,
     DateTime? toDate,
-    CaloriesGroupBy? groupBy,
+    PeriodType? groupBy,
   }) {
     return MealChartLoaded(
       statistics: statistics ?? this.statistics,

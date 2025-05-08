@@ -10,7 +10,7 @@ abstract class MealChartEvent extends Equatable {
 class LoadMealChartData extends MealChartEvent {
   final DateTime fromDate;
   final DateTime toDate;
-  final CaloriesGroupBy groupBy;
+  final PeriodType groupBy;
 
   LoadMealChartData({
     required this.fromDate,
@@ -36,7 +36,7 @@ class ChangeDateRange extends MealChartEvent {
 }
 
 class ChangeGroupBy extends MealChartEvent {
-  final CaloriesGroupBy groupBy;
+  final PeriodType groupBy;
 
   ChangeGroupBy({required this.groupBy});
 

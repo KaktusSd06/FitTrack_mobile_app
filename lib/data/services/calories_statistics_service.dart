@@ -14,7 +14,7 @@ class CaloriesStatisticsService {
   Future<CaloriesStatistics> fetchCaloriesStatistics({
     required DateTime fromDate,
     required DateTime toDate,
-    required CaloriesGroupBy groupBy,
+    required PeriodType groupBy,
   }) async {
     final userId = await _secureStorage.read(key: SecureStorageKeys.userId);
     final accessToken = await _secureStorage.read(key: SecureStorageKeys.accessToken);

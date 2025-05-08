@@ -100,7 +100,7 @@ class AddMealState extends State<AddMeal> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        title: const Text('Додати страву'),
+        title: Text('Додати страву', style: Theme.of(context).textTheme.displayMedium,),
       ),
       body: BlocConsumer<MealBloc, MealState>(
         listener: (context, state) {

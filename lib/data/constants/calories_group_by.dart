@@ -1,11 +1,11 @@
-enum CaloriesGroupBy { day, month }
+enum PeriodType { day, month }
 
-extension CaloriesGroupByExtension on CaloriesGroupBy {
+extension PeriodTypeExtension on PeriodType {
   String get name {
     switch (this) {
-      case CaloriesGroupBy.day:
+      case PeriodType.day:
         return 'Day';
-      case CaloriesGroupBy.month:
+      case PeriodType.month:
         return 'Month';
     }
   }

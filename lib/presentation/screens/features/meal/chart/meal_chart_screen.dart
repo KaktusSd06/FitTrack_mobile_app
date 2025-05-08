@@ -23,7 +23,7 @@ class MealChartScreen extends StatelessWidget {
         LoadMealChartData(
           fromDate: DateTime.now().subtract(const Duration(days: 7)),
           toDate: DateTime.now(),
-          groupBy: CaloriesGroupBy.day,
+          groupBy: PeriodType.day,
         ),
       ),
       child: const MealChartView(),
@@ -162,7 +162,7 @@ class MealChartView extends StatelessWidget {
   }
 
   bool _isYearSelected(MealChartLoaded state) {
-    return state.groupBy == CaloriesGroupBy.month;
+    return state.groupBy == PeriodType.month;
   }
 
   void _selectSevenDays(BuildContext context) {
@@ -175,7 +175,7 @@ class MealChartView extends StatelessWidget {
 
     if (_isYearSelected(context.read<MealChartBloc>().state as MealChartLoaded)) {
       context.read<MealChartBloc>().add(
-        ChangeGroupBy(groupBy: CaloriesGroupBy.day),
+        ChangeGroupBy(groupBy: PeriodType.day),
       );
     }
   }
@@ -190,7 +190,7 @@ class MealChartView extends StatelessWidget {
 
     if (_isYearSelected(context.read<MealChartBloc>().state as MealChartLoaded)) {
       context.read<MealChartBloc>().add(
-        ChangeGroupBy(groupBy: CaloriesGroupBy.day),
+        ChangeGroupBy(groupBy: PeriodType.day),
       );
     }
   }
@@ -205,7 +205,7 @@ class MealChartView extends StatelessWidget {
     );
 
     context.read<MealChartBloc>().add(
-      ChangeGroupBy(groupBy: CaloriesGroupBy.month),
+      ChangeGroupBy(groupBy: PeriodType.month),
     );
   }
 
@@ -377,15 +377,15 @@ class MealChartView extends StatelessWidget {
     );
   }
 
-  String _formatPeriodLabel(String period, CaloriesGroupBy groupBy) {
-    if (groupBy == CaloriesGroupBy.day) {
+  String _formatPeriodLabel(String period, PeriodType groupBy) {
+    if (groupBy == PeriodType.day) {
       try {
         final date = DateFormat('dd/MM/yyyy HH:mm:ss').parse(period);
         return DateFormat('dd/MM').format(date);
       } catch (e) {
         return period;
       }
-    } else if (groupBy == CaloriesGroupBy.day) {
+    } else if (groupBy == PeriodType.day) {
       try {
         final parts = period.split('-');
         if (parts.length == 2) {

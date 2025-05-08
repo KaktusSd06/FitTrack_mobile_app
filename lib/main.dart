@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fittrack/core/config/secure_storage_keys.dart';
 import 'package:fittrack/core/config/theme.dart';
+import 'package:fittrack/data/constants/goal.dart';
 import 'package:fittrack/data/services/goal_service.dart';
 import 'package:fittrack/data/services/meal_service.dart';
+import 'package:fittrack/data/services/step_info_service.dart';
 import 'package:fittrack/data/services/weight_service.dart';
 import 'package:fittrack/presentation/screens/features/goal/bloc/goal_bloc.dart';
 import 'package:fittrack/presentation/screens/features/individual_training/bloc/individual_training_bloc.dart';
@@ -13,6 +15,7 @@ import 'package:fittrack/presentation/screens/features/profile/bloc/profile_bloc
 import 'package:fittrack/presentation/screens/features/set/bloc/set_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.dart';
+import 'package:fittrack/presentation/screens/features/step/bloc/step_bloc.dart';
 import 'package:fittrack/presentation/screens/features/weight/bloc/weight_bloc.dart';
 import 'package:fittrack/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +77,12 @@ Future<void> main() async {
         BlocProvider<MealChartBloc>(
           create: (context) => MealChartBloc(
             statisticsService: CaloriesStatisticsService(),
+          ),
+        ),
+        BlocProvider<StepBloc>(
+          create: (context) => StepBloc(
+              stepsInfoService: StepsInfoService(),
+            goalService: GoalService(),
           ),
         ),
       ],
