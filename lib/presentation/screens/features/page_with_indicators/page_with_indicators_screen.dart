@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../dialogs/error_dialog.dart';
 import '../../../widgets/features/kcal/kcal_home_screen_widget.dart';
 import '../../../widgets/step_counter_widget.dart';
+import '../../../widgets/water_wiidget.dart';
 
 class PageWithIndicatorsScreen extends StatefulWidget{
   const PageWithIndicatorsScreen({super.key});
@@ -79,6 +80,10 @@ class PageWithIndicatorsScreenState extends State<PageWithIndicatorsScreen>{
                   SleepTimeWidget(sleepEntry: state.sleepEntry),
                   const SizedBox(height: 12,),
                   KcalHomeScreenWidget(goal: state.goal, kcal: state.kcalToday,),
+                  const SizedBox(height: 12,),
+                  if(state.waterIntake == null) WaterWidget(waterMl: 0.0, goal: state.waterGoal,),
+                  if(state.waterIntake != null) WaterWidget(waterMl: state.waterIntake!.volumeMl.toDouble(), goal: state.waterGoal,),
+
                 ],
               );
             }

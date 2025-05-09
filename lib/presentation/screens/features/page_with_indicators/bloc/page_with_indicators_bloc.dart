@@ -7,23 +7,28 @@ import '../../../../../data/services/goal_service.dart';
 import '../../../../../data/services/meal_service.dart';
 import '../../../../../data/services/sleep_service.dart';
 import '../../../../../data/models/sleep_entry_model.dart';
+import '../../../../../data/services/water_service.dart';
+import '../../../../../data/models/water_intake_model.dart';
 
 class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndicatorsState>{
   final MealService _mealService;
   final GoalService _goalService;
   final WeightService _weightService;
   final SleepService _sleepService;
+  final WaterService _waterService;
 
   PageWithIndicatorsBloc({
     required MealService mealService,
     required GoalService goalService,
     required WeightService weightModel,
     required SleepService sleepService,
+    required WaterService waterService,
   }) :
         _mealService = mealService,
         _goalService = goalService,
         _weightService = weightModel,
         _sleepService = sleepService,
+        _waterService = waterService,
         super(PageWithIndicatorsInitial()){
     //on<GetUserKcalGoal>(_onGetUserKcalGoal);
     on<GetUserKcalSumToday>(_onGetUserKcalSumToday);
@@ -47,6 +52,7 @@ class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndic
       );
 
       final goalValue = await _goalService.getGoalValue(goalType: Goal.calories.value);
+      final waterGoalValue = await _goalService.getGoalValue(goalType: Goal.water.value);
 
       final weight = await _weightService.getLatestWeight();
 
@@ -55,16 +61,24 @@ class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndic
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
       );
 
+      // Get today's water intake
+      final todayWaterIntake = await _waterService.getWaterIntakeByUserAndDate(
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      );
+
       emit(PageWithIndicatorsLoaded(
         kcalToday: totalCalories,
         goal: goalValue,
+        waterGoal: waterGoalValue,
         weight: weight!.weightKg,
         sleepEntry: todaySleep ?? SleepEntry(
           id: '',
           sleepStart: DateTime.now(),
           wakeUpTime: DateTime.now(),
           userId: '',
-        ),      ));
+        ),
+        waterIntake: todayWaterIntake,
+      ));
     }
     catch (e) {
       emit(PageWithIndicatorsError(message: e.toString()));

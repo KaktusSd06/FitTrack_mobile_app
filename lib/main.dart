@@ -20,6 +20,7 @@ import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.da
 import 'package:fittrack/presentation/screens/features/sleep/bloc/sleep_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sleep/bloc_chart/sleep_statistics_bloc.dart';
 import 'package:fittrack/presentation/screens/features/step/bloc/step_bloc.dart';
+import 'package:fittrack/presentation/screens/features/water_info/bloc/water_bloc.dart';
 import 'package:fittrack/presentation/screens/features/weight/bloc/weight_bloc.dart';
 import 'package:fittrack/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ import 'data/services/calories_statistics_service.dart';
 import 'data/services/exercise_service.dart';
 import 'data/services/individual_training_service.dart';
 import 'data/services/set_service.dart';
+import 'data/services/water_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +63,7 @@ Future<void> main() async {
             goalService: GoalService(),
             weightModel: WeightService(),
             sleepService: SleepService(),
+            waterService: WaterService(),
           ),
         ),
         BlocProvider<MealBloc>(
@@ -98,6 +101,11 @@ Future<void> main() async {
         BlocProvider<SleepStatisticsBloc>(
           create: (context) => SleepStatisticsBloc(
             sleepStatisticsService: SleepStatisticsService(),
+          ),
+        ),
+        BlocProvider<WaterBloc>(
+          create: (context) => WaterBloc(
+            waterService: WaterService(),
           ),
         ),
         
