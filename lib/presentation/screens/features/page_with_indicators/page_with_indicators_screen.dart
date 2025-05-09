@@ -1,6 +1,7 @@
 import 'package:fittrack/presentation/screens/features/page_with_indicators/bloc/page_with_indicators_bloc.dart';
 import 'package:fittrack/presentation/screens/features/page_with_indicators/bloc/page_with_indicators_event.dart';
 import 'package:fittrack/presentation/screens/features/page_with_indicators/bloc/page_with_indicators_state.dart';
+import 'package:fittrack/presentation/widgets/sleep_time_widget.dart';
 import 'package:fittrack/presentation/widgets/weight_home_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,15 +76,9 @@ class PageWithIndicatorsScreenState extends State<PageWithIndicatorsScreen>{
                   const SizedBox(height: 12,),
                   WeightHomeScreenWidget(weight: state.weight),
                   const SizedBox(height: 12,),
+                  SleepTimeWidget(sleepEntry: state.sleepEntry),
+                  const SizedBox(height: 12,),
                   KcalHomeScreenWidget(goal: state.goal, kcal: state.kcalToday,),
-
-
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterScreen()));
-                  //   },
-                  //   child: Text("step"),
-                  // )
                 ],
               );
             }

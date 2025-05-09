@@ -5,14 +5,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../data/constants/goal.dart';
 import '../../../../../data/services/goal_service.dart';
 import '../../../../../data/services/meal_service.dart';
+import '../../../../../data/services/sleep_service.dart';
+import '../../../../../data/models/sleep_entry_model.dart';
 
 class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndicatorsState>{
   final MealService _mealService;
   final GoalService _goalService;
   final WeightService _weightService;
+  final SleepService _sleepService;
 
-  PageWithIndicatorsBloc({required MealService mealService, required GoalService goalService, required WeightService weightModel}) :
-        _mealService = mealService, _goalService = goalService, _weightService = weightModel, super(PageWithIndicatorsInitial()){
+  PageWithIndicatorsBloc({
+    required MealService mealService,
+    required GoalService goalService,
+    required WeightService weightModel,
+    required SleepService sleepService,
+  }) :
+        _mealService = mealService,
+        _goalService = goalService,
+        _weightService = weightModel,
+        _sleepService = sleepService,
+        super(PageWithIndicatorsInitial()){
     //on<GetUserKcalGoal>(_onGetUserKcalGoal);
     on<GetUserKcalSumToday>(_onGetUserKcalSumToday);
   }
@@ -24,6 +36,7 @@ class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndic
     try{
       emit(PageWithIndicatorsLoading());
 
+      // Get meals data
       final meals = await _mealService.getMealByUserIdAdnDate(
         date: event.date,
       );
@@ -37,7 +50,21 @@ class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndic
 
       final weight = await _weightService.getLatestWeight();
 
-      emit(PageWithIndicatorsLoaded(kcalToday: totalCalories, goal: goalValue, weight: weight!.weightKg));
+      // Get today's sleep entry
+      final todaySleep = await _sleepService.getSleepByUserAndDate(
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      );
+
+      emit(PageWithIndicatorsLoaded(
+        kcalToday: totalCalories,
+        goal: goalValue,
+        weight: weight!.weightKg,
+        sleepEntry: todaySleep ?? SleepEntry(
+          id: '',
+          sleepStart: DateTime.now(),
+          wakeUpTime: DateTime.now(),
+          userId: '',
+        ),      ));
     }
     catch (e) {
       emit(PageWithIndicatorsError(message: e.toString()));

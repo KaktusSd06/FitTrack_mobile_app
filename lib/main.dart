@@ -4,6 +4,8 @@ import 'package:fittrack/core/config/theme.dart';
 import 'package:fittrack/data/constants/goal.dart';
 import 'package:fittrack/data/services/goal_service.dart';
 import 'package:fittrack/data/services/meal_service.dart';
+import 'package:fittrack/data/services/sleep_service.dart';
+import 'package:fittrack/data/services/sleep_statistics_service.dart';
 import 'package:fittrack/data/services/step_info_service.dart';
 import 'package:fittrack/data/services/weight_service.dart';
 import 'package:fittrack/presentation/screens/features/goal/bloc/goal_bloc.dart';
@@ -15,6 +17,8 @@ import 'package:fittrack/presentation/screens/features/profile/bloc/profile_bloc
 import 'package:fittrack/presentation/screens/features/set/bloc/set_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.dart';
+import 'package:fittrack/presentation/screens/features/sleep/bloc/sleep_bloc.dart';
+import 'package:fittrack/presentation/screens/features/sleep/bloc_chart/sleep_statistics_bloc.dart';
 import 'package:fittrack/presentation/screens/features/step/bloc/step_bloc.dart';
 import 'package:fittrack/presentation/screens/features/weight/bloc/weight_bloc.dart';
 import 'package:fittrack/presentation/screens/home_screen.dart';
@@ -56,6 +60,7 @@ Future<void> main() async {
             mealService: MealService(),
             goalService: GoalService(),
             weightModel: WeightService(),
+            sleepService: SleepService(),
           ),
         ),
         BlocProvider<MealBloc>(
@@ -85,6 +90,17 @@ Future<void> main() async {
             goalService: GoalService(),
           ),
         ),
+        BlocProvider<SleepBloc>(
+          create: (context) => SleepBloc(
+            sleepService: SleepService(), secureStorage: FlutterSecureStorage(),
+          ),
+        ),
+        BlocProvider<SleepStatisticsBloc>(
+          create: (context) => SleepStatisticsBloc(
+            sleepStatisticsService: SleepStatisticsService(),
+          ),
+        ),
+        
       ],
       child: MaterialApp(
         title: 'FitTrack',
