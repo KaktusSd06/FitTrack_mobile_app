@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.android")
 }
 
 dependencies {
@@ -25,7 +26,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs = listOf("-Xallow-no-source-files", "-Xuse-k2")
+        freeCompilerArgs = listOf("-Xallow-no-source-files")
     }
 
     defaultConfig {
@@ -57,7 +58,7 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs = listOf("-Xallow-no-source-files", "-Xuse-k2")
+        freeCompilerArgs = listOf("-Xallow-no-source-files")
     }
 }
 

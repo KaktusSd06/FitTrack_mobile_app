@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../data/services/auth_service.dart';
 import '../dialogs/error_dialog.dart';
+import 'features/page_with_indicators/page_with_indicators_screen.dart';
 import 'features/profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget{
@@ -55,7 +56,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> _pages = [
-    const Center(child: Text("Головна сторінка")),
+    const PageWithIndicatorsScreen(),
     const IndividualTrainingScreen(),
     const Center(child: Text("Мій клуб")),
     const ProfileScreen(),

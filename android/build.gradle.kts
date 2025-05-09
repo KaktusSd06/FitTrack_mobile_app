@@ -22,13 +22,35 @@ allprojects {
 }
 
 subprojects {
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-        kotlinOptions {
-            jvmTarget = "17"
-            freeCompilerArgs = listOf("-Xallow-no-source-files", "-Xuse-k2")
+    afterEvaluate {
+        if (project.plugins.hasPlugin("com.android.library") ||
+            project.plugins.hasPlugin("com.android.application")) {
+
+            // Для налаштування android конфігурацій в підпроекті
+            project.extensions.findByType<com.android.build.gradle.BaseExtension>()?.apply {
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
+                }
+            }
+
+            // Для налаштування Kotlin компіляції
+            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                kotlinOptions {
+                    jvmTarget = "17"
+                    freeCompilerArgs = listOf("-Xallow-no-source-files")
+                }
+            }
+
+            // Для налаштування Java компіляції
+            tasks.withType<JavaCompile>().configureEach {
+                sourceCompatibility = JavaVersion.VERSION_17.toString()
+                targetCompatibility = JavaVersion.VERSION_17.toString()
+            }
         }
     }
 }
+
 
 val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
 rootProject.layout.buildDirectory.value(newBuildDir)

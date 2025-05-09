@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/config/theme.dart' as app_colors;
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class BirthDateScreen extends StatefulWidget {
