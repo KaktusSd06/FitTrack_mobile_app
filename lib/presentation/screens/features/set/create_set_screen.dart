@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fittrack/data/models/exercise_model.dart';
@@ -114,9 +115,19 @@ class _CreateSetScreenState extends State<CreateSetScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Створення сета'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            icon: Icon(
+              CupertinoIcons.back,
+              color: Theme
+                  .of(context)
+                  .hintColor,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),

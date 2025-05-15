@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fittrack/data/models/sleep_entry_model.dart';
+import 'package:fittrack/data/models/sleep/sleep_entry_model.dart';
 import 'package:fittrack/data/models/water_intake_model.dart';
 
 abstract class PageWithIndicatorsState extends Equatable {

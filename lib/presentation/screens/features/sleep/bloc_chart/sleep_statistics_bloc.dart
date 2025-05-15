@@ -25,10 +25,6 @@ class SleepStatisticsBloc extends Bloc<SleepStatisticsEvent, SleepStatisticsStat
         toDate: event.toDate,
       );
 
-      // Sort the sleep entries by date (newest to oldest)
-      final sortedEntries = sleepStatistics.sleepGrouped
-        ..sort((a, b) => b.date.compareTo(a.date));
-
       // Create a copy of the response with sorted entries
       final sortedStatistics = sleepStatistics;
 

@@ -1,4 +1,5 @@
-import 'sleep_statistic_entry.dart';
+
+import 'package:fittrack/data/models/sleep/sleep_statistic_entry.dart';
 
 class SleepStatisticResponse {
   final List<SleepStatisticEntry> sleepGrouped;

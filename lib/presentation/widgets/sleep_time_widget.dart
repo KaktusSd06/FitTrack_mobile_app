@@ -1,7 +1,7 @@
 import 'package:fittrack/presentation/screens/features/sleep/sleep_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/sleep_entry_model.dart';
+import '../../data/models/sleep/sleep_entry_model.dart';
 import '../screens/features/page_with_indicators/bloc/page_with_indicators_bloc.dart';
 import '../screens/features/page_with_indicators/bloc/page_with_indicators_event.dart';
 

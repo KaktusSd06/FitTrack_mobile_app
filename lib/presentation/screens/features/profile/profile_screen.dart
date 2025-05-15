@@ -1,3 +1,4 @@
+import 'package:fittrack/presentation/screens/features/group_trainings_history/group_trainings_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -154,6 +155,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         svgPath: "assets/icons/history.svg",
                         text: 'Історія покупок',
                         onTap: () {},
+                      ),
+                      ActionBlock(
+                        svgPath: "assets/icons/history.svg",
+                        text: 'Історія записів',
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => GroupTrainingsHistoryScreen()));
+                        },
                       ),
                       ActionBlock(
                         svgPath: "assets/icons/message.svg",

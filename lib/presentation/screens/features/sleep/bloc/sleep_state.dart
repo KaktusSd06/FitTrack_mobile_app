@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../../../data/models/sleep_entry_model.dart';
+import '../../../../../data/models/sleep/sleep_entry_model.dart';
 
 enum SleepStatus { initial, loading, loaded, error }
 

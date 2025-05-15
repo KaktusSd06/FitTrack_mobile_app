@@ -69,6 +69,7 @@ class _StepGoalScreenState extends State<StepGoalScreen> {
               SnackBar(
                 content: const Text('Ціль змінено'),
                 behavior: SnackBarBehavior.floating,
+                backgroundColor: Theme.of(context).primaryColor,
                 margin: const EdgeInsets.all(16),
                 elevation: 6,
                 shape: RoundedRectangleBorder(

@@ -69,6 +69,7 @@ class _WaterGoalScreenState extends State<WaterGoalScreen> {
               SnackBar(
                 content: const Text('Ціль змінено'),
                 behavior: SnackBarBehavior.floating,
+                backgroundColor: Theme.of(context).primaryColor,
                 margin: const EdgeInsets.all(16),
                 elevation: 6,
                 shape: RoundedRectangleBorder(
@@ -83,7 +84,6 @@ class _WaterGoalScreenState extends State<WaterGoalScreen> {
                 content: const Text('Помилка встановлення цілі, спробуйте пізніше'),
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.red,
-
                 margin: const EdgeInsets.all(16),
                 elevation: 6,
                 shape: RoundedRectangleBorder(

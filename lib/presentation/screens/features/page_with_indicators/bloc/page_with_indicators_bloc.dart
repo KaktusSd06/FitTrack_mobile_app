@@ -6,9 +6,8 @@ import '../../../../../data/constants/goal.dart';
 import '../../../../../data/services/goal_service.dart';
 import '../../../../../data/services/meal_service.dart';
 import '../../../../../data/services/sleep_service.dart';
-import '../../../../../data/models/sleep_entry_model.dart';
+import '../../../../../data/models/sleep/sleep_entry_model.dart';
 import '../../../../../data/services/water_service.dart';
-import '../../../../../data/models/water_intake_model.dart';
 
 class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndicatorsState>{
   final MealService _mealService;
@@ -70,7 +69,7 @@ class PageWithIndicatorsBloc extends Bloc<PageWithIndicatorsEvent, PageWithIndic
         kcalToday: totalCalories,
         goal: goalValue,
         waterGoal: waterGoalValue,
-        weight: weight!.weightKg,
+        weight: weight != null ? weight!.weightKg : 0.0,
         sleepEntry: todaySleep ?? SleepEntry(
           id: '',
           sleepStart: DateTime.now(),

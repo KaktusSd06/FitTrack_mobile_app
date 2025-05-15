@@ -2,16 +2,27 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fittrack/core/config/secure_storage_keys.dart';
 import 'package:fittrack/core/config/theme.dart';
 import 'package:fittrack/data/constants/goal.dart';
+import 'package:fittrack/data/models/message_model.dart';
 import 'package:fittrack/data/services/goal_service.dart';
+import 'package:fittrack/data/services/group_training_service.dart';
 import 'package:fittrack/data/services/meal_service.dart';
 import 'package:fittrack/data/services/sleep_service.dart';
 import 'package:fittrack/data/services/sleep_statistics_service.dart';
 import 'package:fittrack/data/services/step_info_service.dart';
+import 'package:fittrack/data/services/trainer_messages_service.dart';
+import 'package:fittrack/data/services/user_service.dart';
 import 'package:fittrack/data/services/weight_service.dart';
+import 'package:fittrack/logic/bloc/group_training/group_bloc.dart';
+import 'package:fittrack/logic/bloc/user_update/user_update_bloc.dart';
+import 'package:fittrack/presentation/screens/features/club/bloc/club_bloc.dart';
 import 'package:fittrack/presentation/screens/features/goal/bloc/goal_bloc.dart';
+import 'package:fittrack/presentation/screens/features/group_trainings/bloc/group_training_bloc.dart';
+import 'package:fittrack/presentation/screens/features/group_trainings_history/bloc/group_trainings_history_bloc.dart';
+import 'package:fittrack/presentation/screens/features/gym/bloc/gym_bloc/gym_bloc.dart';
 import 'package:fittrack/presentation/screens/features/individual_training/bloc/individual_training_bloc.dart';
 import 'package:fittrack/presentation/screens/features/meal/bloc/meal_bloc.dart';
 import 'package:fittrack/presentation/screens/features/meal/chart/bloc/meal_chart_bloc.dart';
+import 'package:fittrack/presentation/screens/features/message_from_trainer/bloc/message_bloc.dart';
 import 'package:fittrack/presentation/screens/features/page_with_indicators/bloc/page_with_indicators_bloc.dart';
 import 'package:fittrack/presentation/screens/features/profile/bloc/profile_bloc.dart';
 import 'package:fittrack/presentation/screens/features/set/bloc/set_bloc.dart';
@@ -20,6 +31,7 @@ import 'package:fittrack/presentation/screens/features/sign_in/sign_in_screen.da
 import 'package:fittrack/presentation/screens/features/sleep/bloc/sleep_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sleep/bloc_chart/sleep_statistics_bloc.dart';
 import 'package:fittrack/presentation/screens/features/step/bloc/step_bloc.dart';
+import 'package:fittrack/presentation/screens/features/store/bloc/store_bloc.dart';
 import 'package:fittrack/presentation/screens/features/water_info/bloc/water_bloc.dart';
 import 'package:fittrack/presentation/screens/features/weight/bloc/weight_bloc.dart';
 import 'package:fittrack/presentation/screens/home_screen.dart';
@@ -31,6 +43,7 @@ import 'dart:async';
 import 'data/services/auth_service.dart';
 import 'data/services/calories_statistics_service.dart';
 import 'data/services/exercise_service.dart';
+import 'data/services/gym_service.dart';
 import 'data/services/individual_training_service.dart';
 import 'data/services/set_service.dart';
 import 'data/services/water_service.dart';
@@ -89,7 +102,7 @@ Future<void> main() async {
         ),
         BlocProvider<StepBloc>(
           create: (context) => StepBloc(
-              stepsInfoService: StepsInfoService(),
+            stepsInfoService: StepsInfoService(),
             goalService: GoalService(),
           ),
         ),
@@ -108,7 +121,45 @@ Future<void> main() async {
             waterService: WaterService(),
           ),
         ),
-        
+        BlocProvider<ClubBloc>(
+          create: (context) => ClubBloc(
+            gymService: GymService(),
+            userService: UserService(),
+          ),
+        ),
+        BlocProvider<GroupTrainingBloc>(
+          create: (context) => GroupTrainingBloc(
+            groupService: GroupTrainingService(),
+          ),
+        ),
+        BlocProvider<GymBloc>(
+          create: (context) => GymBloc(
+            gymService: GymService(),
+          ),
+        ),
+        BlocProvider<UserUpdateBloc>(
+          create: (context) => UserUpdateBloc(
+            userService: UserService(),
+          ),
+        ),
+        BlocProvider<StoreBloc>(
+          create: (context) => StoreBloc(),
+        ),
+        BlocProvider<MessageBloc>(
+          create: (context) => MessageBloc(
+            service: TrainerCommentService(),
+          ),
+        ),
+        BlocProvider<GroupBloc>(
+          create: (context) => GroupBloc(
+            groupTrainingService: GroupTrainingService(),
+          ),
+        ),
+        BlocProvider<GroupTrainingsHistoryBloc>(
+          create: (context) => GroupTrainingsHistoryBloc(
+            groupService: GroupTrainingService(),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'FitTrack',
