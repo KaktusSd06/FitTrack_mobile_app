@@ -1,4 +1,5 @@
 import 'package:fittrack/presentation/screens/features/group_trainings_history/group_trainings_history_screen.dart';
+import 'package:fittrack/presentation/screens/features/terms_of_use/terms_of_use_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -157,12 +158,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {},
                       ),
                       ActionBlock(
-                        svgPath: "assets/icons/history.svg",
+                        svgPath: "assets/icons/record_history.svg",
                         text: 'Історія записів',
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => GroupTrainingsHistoryScreen()));
-                        },
+                          Navigator.push(context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation,
+                                  secondaryAnimation) => GroupTrainingsHistoryScreen(),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                final tween = Tween(begin: const Offset(1, 0.0),
+                                    end: Offset.zero);
+                                final curvedAnimation = CurvedAnimation(
+                                  parent: animation,
+                                  curve: Curves.easeInOut,
+                                );
+
+                                return SlideTransition(
+                                  position: tween.animate(curvedAnimation),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                          },
+                        isLastItem: true,
                       ),
+                    ],
+                  )
+              ),
+            ),
+            SizedBox(height: 12,),
+
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Theme
+                    .of(context)
+                    .cardColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme
+                        .of(context)
+                        .brightness == Brightness.light
+                        ? Colors.black.withAlpha((0.1 * 255).round())
+                        : Colors.white.withAlpha((0.1 * 255).round()),
+                    blurRadius: 20,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8, horizontal: 16),
+                  child: Column(
+                    children: [
                       ActionBlock(
                         svgPath: "assets/icons/message.svg",
                         text: "Зв'язатись з нами",
@@ -170,6 +221,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           _sendEmail(context);
                         },
                         isLastItem: false,
+                      ),
+                      ActionBlock(
+                        svgPath: "assets/icons/terms_of_use.svg",
+                        text: 'Умови використання',
+                        onTap: () {
+                          Navigator.push(context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation,
+                                  secondaryAnimation) => TermsOfUseScreen(),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                final tween = Tween(begin: const Offset(1, 0.0),
+                                    end: Offset.zero);
+                                final curvedAnimation = CurvedAnimation(
+                                  parent: animation,
+                                  curve: Curves.easeInOut,
+                                );
+
+                                return SlideTransition(
+                                  position: tween.animate(curvedAnimation),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        },
+
                       ),
                       ActionBlock(
                         svgPath: "assets/icons/exit.svg",
