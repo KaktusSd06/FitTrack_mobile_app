@@ -39,6 +39,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
 import 'data/services/auth_service.dart';
 import 'data/services/calories_statistics_service.dart';
@@ -51,7 +52,9 @@ import 'data/services/water_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(
     MultiBlocProvider(
       providers: [
