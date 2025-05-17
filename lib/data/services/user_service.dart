@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/config/config.dart';
 import '../../core/config/secure_storage_keys.dart';
 import '../models/gym_model.dart';
+import '../models/store/user_membership_model.dart';
 import '../models/trainer_model.dart';
 
 enum PatchOperationType { replace }
@@ -92,6 +93,40 @@ class UserService {
       return null;
     } else {
       throw Exception('Не вдалося отримати тренера користувача: ${response.statusCode}\n${response.body}');
+    }
+  }
+
+  Future<UserMembershipModel?> getActiveMembershipByGymId(String gymId) async {
+    final accessToken = await _secureStorage.read(key: SecureStorageKeys.accessToken);
+    final userId = await _secureStorage.read(key: SecureStorageKeys.userId);
+
+    final uri = Uri.parse('$baseUrl/api/User/get-active-membership-by-gymId/$gymId');
+
+    final queryParams = <String, String>{};
+    if (userId != null) {
+      queryParams['userId'] = userId;
+    }
+
+    final response = await http.get(
+      uri.replace(queryParameters: queryParams.isNotEmpty ? queryParams : null),
+      headers: {
+        'Content-Type': 'application/json',
+        if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      if (response.body.isEmpty) {
+        return null;
+      }
+
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      return UserMembershipModel.fromJson(data);
+    } else if (response.statusCode == 404) {
+      return null;
+    }
+    else {
+      throw Exception('Не вдалося отримати активне членство: ${response.statusCode}');
     }
   }
 }
