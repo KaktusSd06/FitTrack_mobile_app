@@ -23,6 +23,7 @@ import 'package:fittrack/presentation/screens/features/meal/chart/bloc/meal_char
 import 'package:fittrack/presentation/screens/features/message_from_trainer/bloc/message_bloc.dart';
 import 'package:fittrack/presentation/screens/features/page_with_indicators/bloc/page_with_indicators_bloc.dart';
 import 'package:fittrack/presentation/screens/features/profile/bloc/profile_bloc.dart';
+import 'package:fittrack/presentation/screens/features/profile/profile_screen.dart';
 import 'package:fittrack/presentation/screens/features/set/bloc/set_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sign_in/bloc/sign_in_bloc.dart';
 import 'package:fittrack/presentation/screens/features/sleep/bloc/sleep_bloc.dart';
@@ -42,9 +43,14 @@ import 'logic/bloc/group_training/group_bloc.dart';
 import 'logic/bloc/user_update/user_update_bloc.dart';
 
 class AppBlocs {
+  // Створення синглтона SignInBloc для повторного використання між екранами
+  static final SignInBloc _signInBloc = SignInBloc();
+  static final ProfileBloc _profileBloc = ProfileBloc();
+
   static List<BlocProvider> providers = [
-    BlocProvider(create: (_) => SignInBloc()),
-    BlocProvider(create: (_) => ProfileBloc()),
+    // Використовуємо синглтони для цих блоків
+    BlocProvider<SignInBloc>(create: (_) => _signInBloc),
+    BlocProvider<ProfileBloc>(create: (_) => _profileBloc),
     BlocProvider<IndividualTrainingBloc>(
       create: (context) => IndividualTrainingBloc(
         trainingService: IndividualTrainingService(),
@@ -130,8 +136,8 @@ class AppBlocs {
     ),
     BlocProvider<StoreBloc>(
       create: (context) => StoreBloc(
-        membershipService: MembershipService(),
-        productService: ProductService()
+          membershipService: MembershipService(),
+          productService: ProductService()
       ),
     ),
     BlocProvider<MessageBloc>(
@@ -155,6 +161,26 @@ class AppBlocs {
     return MultiBlocProvider(
       providers: providers,
       child: child,
+    );
+  }
+
+  // Допоміжний метод для обгортання окремого екрану в блоки, якщо це необхідно
+  static Widget provideSignInBlocToScreen({required Widget child}) {
+    return BlocProvider<SignInBloc>.value(
+      value: _signInBloc,
+      child: child,
+    );
+  }
+
+  // Метод для створення профільного екрану з необхідними блоками
+  static Widget createProfileScreen() {
+    // Припускаємо, що ваш ProfileScreen потребує SignInBloc та ProfileBloc
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SignInBloc>.value(value: _signInBloc),
+        BlocProvider<ProfileBloc>.value(value: _profileBloc),
+      ],
+      child: const ProfileScreen(), // Замініть на ваш ProfileScreen з потрібними параметрами
     );
   }
 }
