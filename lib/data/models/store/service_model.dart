@@ -1,6 +1,6 @@
 class ServiceModel{
   final String id, name, description;
-  final int price;
+  final double price;
 
   ServiceModel({required this.id, required this.name, required this.description, required this.price});
 
