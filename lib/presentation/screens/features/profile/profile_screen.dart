@@ -8,6 +8,7 @@ import 'package:fittrack/presentation/dialogs/confirmation_dialog.dart';
 import '../../../dialogs/error_dialog.dart';
 import '../../../widgets/profile_action_bloc.dart';
 import '../../../widgets/user_avatar.dart';
+import '../purchases_history/purchases_history_screen.dart';
 import '../sign_in/bloc/sign_in_bloc.dart';
 import '../sign_in/bloc/sign_in_event.dart';
 import '../sign_in/sign_in_screen.dart';
@@ -155,7 +156,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ActionBlock(
                         svgPath: "assets/icons/history.svg",
                         text: 'Історія покупок',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PurchasesHistoryScreen()));
+                        },
                       ),
                       ActionBlock(
                         svgPath: "assets/icons/record_history.svg",
@@ -164,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.push(context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation,
-                                  secondaryAnimation) => GroupTrainingsHistoryScreen(),
+                                  secondaryAnimation) => const GroupTrainingsHistoryScreen(),
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
                                 final tween = Tween(begin: const Offset(1, 0.0),
@@ -188,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
               ),
             ),
-            SizedBox(height: 12,),
+            const SizedBox(height: 12,),
 
             Container(
               decoration: BoxDecoration(
@@ -229,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.push(context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation,
-                                  secondaryAnimation) => TermsOfUseScreen(),
+                                  secondaryAnimation) => const TermsOfUseScreen(),
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
                                 final tween = Tween(begin: const Offset(1, 0.0),
