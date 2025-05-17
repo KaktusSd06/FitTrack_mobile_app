@@ -131,24 +131,29 @@ class ClubScreenState extends State<ClubScreen> {
                         });
                       },
                     ),
-                    const SizedBox(height: 16,),
-                    WidgetWithTitleAndText(
-                      title: state.membershipTitle,
-                      text: state.membershipDate,
-                      imgPath: null,
-                      icon: "assets/icons/membership.svg",
-                      isBtnIcon: false,
-                      onTap: () {
+                    if (state.membership != null) ...[
+                      const SizedBox(height: 16),
+                      WidgetWithTitleAndText(
+                        title: state.membership!.membership!.name,
+                        text: state.membership!.membership!.allowedSessions != null ?
+                        "Всього відвідувань: ${state.membership!.membership!.allowedSessions.toString()}" :
+                        "Тривалість: ${state.membership!.membership!.durationMonth.toString()} місяців",
+                        imgPath: null,
+                        icon: "assets/icons/membership.svg",
+                        isBtnIcon: false,
+                        onTap: () {},
+                      ),
+                    ],
 
-                      },
-                    ),
+
+
                     const SizedBox(height: 16,),
                     state.trainer != null ?
 
                       WidgetWithTitleAndText(
                         title: state.trainer != null ? state.trainer!.lastName : "Оберіть тренера",
                         text: state.trainer != null ? state.trainer!.firstName : "",
-                        imgPath: state.trainer!.profileImageUrl ?? "",
+                        imgPath: state.trainer!.profileImageUrl,
                         icon: null,
                         isBtnIcon: true,
                         onTap: () {
@@ -191,7 +196,9 @@ class ClubScreenState extends State<ClubScreen> {
                               );
                             },
                           ),
-                        );
+                        ).then((_) {
+                          _loadPageInfo();
+                        });
 
                       },),
                   ],
