@@ -1,6 +1,6 @@
 class ProductModel{
   final String id, name, description, imageUrl;
-  final int price;
+  final double price;
 
   ProductModel({required this.id, required this.name, required this.description, required this.imageUrl, required this.price});
 

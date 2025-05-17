@@ -1,7 +1,7 @@
 class MembershipModel{
   final String id, name, type, gymId;
   final int? allowedSessions, durationMonth;
-  final int price;
+  final double price;
 
   MembershipModel({required this.id, required this.name, required this.type, required this.gymId,
     required this.allowedSessions, required this.durationMonth, required this.price});

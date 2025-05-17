@@ -1,11 +1,13 @@
-import 'package:fittrack/data/models/store/membership_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class MembershipWidget extends StatelessWidget {
-  final MembershipModel membership;
+import '../../../../data/models/store/user_membership_model.dart';
+
+class MembershipHistoryWidget extends StatelessWidget {
+  final UserMembershipModel membership;
   final Function()? onBuyPressed;
 
-  const MembershipWidget({
+  const MembershipHistoryWidget({
     required this.membership,
     this.onBuyPressed,
     super.key
@@ -43,29 +45,16 @@ class MembershipWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        membership.name,
+                        membership.membership!.name,
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.monetization_on_outlined,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${membership.price} грн',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+
+                      _buildStatusIndicator(context),
                     ],
                   ),
+
                 ],
               ),
             ),
@@ -76,13 +65,13 @@ class MembershipWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (membership.durationMonth != null)
+                if (membership.membership!.durationMonth != null)
                   _buildDetailRow(
                     context: context,
                     icon: Icons.calendar_month,
                     label: _getDurationText(),
                   ),
-                if (membership.allowedSessions != null)
+                if (membership.membership!.allowedSessions != null)
                   _buildDetailRow(
                     context: context,
                     icon: Icons.confirmation_num,
@@ -94,29 +83,69 @@ class MembershipWidget extends StatelessWidget {
 
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: onBuyPressed,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.monetization_on_outlined,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${membership.membership!.price} грн',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                child: const Text(
-                  'Придбати',
-                  style: TextStyle(
+
+                Text(
+                  DateFormat('dd.MM.yyyy').format(membership.purchaseDate),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
                   ),
                 ),
-              ),
+              ],
             ),
-          ),
+          )
         ],
       ),
+    );
+  }
+
+  Widget _buildStatusIndicator(BuildContext context) {
+    Color statusColor;
+
+    switch (membership.status.toLowerCase()) {
+      case 'pending':
+        statusColor = Colors.amber;
+        break;
+      case 'active':
+        statusColor = Colors.green;
+        break;
+      case 'expired':
+        statusColor = Colors.red;
+        break;
+      default:
+        statusColor = Colors.grey;
+    }
+
+    return Row(
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: statusColor,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ],
     );
   }
 
@@ -143,21 +172,8 @@ class MembershipWidget extends StatelessWidget {
     );
   }
 
-  String _getMembershipTypeLabel() {
-    switch (membership.type) {
-      case 'SessionLimited':
-        return 'Абонемент з обмеженням за кількістю тренувань';
-      case 'TimeLimited':
-        return 'Абонемент з обмеженням за часом';
-      case 'Combined':
-        return 'Комбінований абонемент';
-      default:
-        return membership.type;
-    }
-  }
-
   String _getDurationText() {
-    final duration = membership.durationMonth;
+    final duration = membership.membership!.durationMonth;
     if (duration == null) return '';
 
     if (duration == 1) return 'Термін дії: 1 місяць';
@@ -166,7 +182,7 @@ class MembershipWidget extends StatelessWidget {
   }
 
   String _getSessionsText() {
-    final sessions = membership.allowedSessions;
+    final sessions = membership.membership!.allowedSessions;
     if (sessions == null) return '';
 
     return 'Кількість тренувань: $sessions';

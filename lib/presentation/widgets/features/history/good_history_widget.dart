@@ -1,15 +1,15 @@
-import 'package:fittrack/data/models/store/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class ProductWidget extends StatelessWidget {
-  final ProductModel product;
-  final Function()? onBuyPressed;
+import '../../../../data/models/store/purchases_model.dart';
 
-  const ProductWidget({
+class GoodHistoryWidget extends StatelessWidget {
+  final PurchaseModel product;
+
+  const GoodHistoryWidget({
     required this.product,
-    this.onBuyPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class ProductWidget extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      product.imageUrl,
+                      product.product!.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return const Center(
@@ -71,7 +71,7 @@ class ProductWidget extends StatelessWidget {
                     children: [
                       // Product name
                       Text(
-                        product.name,
+                        product.product!.name,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -82,32 +82,13 @@ class ProductWidget extends StatelessWidget {
 
                       // Product description
                       Text(
-                        product.description,
+                        product.product!.description,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.grey[700],
                         ),
                       ),
 
                       const SizedBox(height: 16),
-                      // // Price button
-                      // GestureDetector(
-                      //   onTap: onBuyPressed!,
-                      //   child: Container(
-                      //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      //     decoration: BoxDecoration(
-                      //       color: Theme.of(context).primaryColor,
-                      //       borderRadius: BorderRadius.circular(8),
-                      //     ),
-                      //     child: Text(
-                      //       '${product.price} грн',
-                      //       style: const TextStyle(
-                      //         color: Colors.white,
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // )
-
                     ],
                   ),
                 ),
@@ -134,23 +115,11 @@ class ProductWidget extends StatelessWidget {
                     ],
                   ),
 
-                  ElevatedButton(
-                    onPressed: onBuyPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme
-                          .of(context)
-                          .primaryColor,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      'Придбати',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
+                  Text(
+                    DateFormat('dd.MM.yyyy').format(product.purchaseDate),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ]
