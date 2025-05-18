@@ -36,65 +36,29 @@ class GroupTrainingsHistoryScreenState extends State<GroupTrainingsHistoryScreen
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-            "Історія записів",
+          "Історія записів",
           style: Theme.of(context).textTheme.displayMedium,
         ),
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Theme
-                .of(context)
-                .hintColor),
+            icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).hintColor),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
       ),
-      body: Expanded(
-        child: BlocBuilder<GroupTrainingsHistoryBloc,
-            GroupTrainingHistoryState>(
-          builder: (context, state) {
-            if (state is GroupTrainingHistoryLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is GroupTrainingHistoryLoaded) {
-              final trainings = state.groupTrainings;
+      // Remove the Expanded widget here - it's not needed and causes the error
+      body: BlocBuilder<GroupTrainingsHistoryBloc, GroupTrainingHistoryState>(
+        builder: (context, state) {
+          if (state is GroupTrainingHistoryLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is GroupTrainingHistoryLoaded) {
+            final trainings = state.groupTrainings;
 
-              if (trainings.isEmpty) {
-                return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/images/club_screen_empty.svg",
-                          height: 259.84,
-                        ),
-                        const SizedBox(height: 16,),
-                        Text(
-                          "Саме час записатись на тренування",
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .displaySmall,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    )
-                );
-              }
-
-              return ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: trainings.length,
-                itemBuilder: (context, index) {
-                  return GroupTrainingHistoryWidgets(
-                      training: trainings[index]);
-                },
-              );
-            } else if (state is GroupTrainingHistoryError) {
-              Center(
+            if (trainings.isEmpty) {
+              return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -104,11 +68,8 @@ class GroupTrainingsHistoryScreenState extends State<GroupTrainingsHistoryScreen
                       ),
                       const SizedBox(height: 16,),
                       Text(
-                        "Виникла помилка завантаження тренувань, спробуйте пізніше",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .displaySmall,
+                        "Саме час записатись на тренування",
+                        style: Theme.of(context).textTheme.displaySmall,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -116,11 +77,39 @@ class GroupTrainingsHistoryScreenState extends State<GroupTrainingsHistoryScreen
               );
             }
 
-            return const Center(
-              child: Text('Виберіть дату для перегляду тренувань'),
+            return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: trainings.length,
+              itemBuilder: (context, index) {
+                return GroupTrainingHistoryWidgets(
+                    training: trainings[index]);
+              },
             );
-          },
-        ),
+          } else if (state is GroupTrainingHistoryError) {
+            // Fixed missing return statement here
+            return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/club_screen_empty.svg",
+                      height: 259.84,
+                    ),
+                    const SizedBox(height: 16,),
+                    Text(
+                      "Виникла помилка завантаження тренувань, спробуйте пізніше",
+                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )
+            );
+          }
+
+          return const Center(
+            child: Text('Виберіть дату для перегляду тренувань'),
+          );
+        },
       ),
     );
   }
