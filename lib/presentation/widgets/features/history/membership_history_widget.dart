@@ -32,13 +32,13 @@ class MembershipHistoryWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
+            Center(
               child: Column(
                 children: [
                   Row(
@@ -58,11 +58,20 @@ class MembershipHistoryWidget extends StatelessWidget {
                 ],
               ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
+            SizedBox(height: 4,),
+
+            Text(
+              '${membership.gymTitle}',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.secondary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            SizedBox(height: 4,),
+
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (membership.membership!.durationMonth != null)
@@ -79,11 +88,10 @@ class MembershipHistoryWidget extends StatelessWidget {
                   ),
               ],
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
+            SizedBox(height: 8),
+
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -112,8 +120,8 @@ class MembershipHistoryWidget extends StatelessWidget {
                 ),
               ],
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

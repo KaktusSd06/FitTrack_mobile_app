@@ -10,6 +10,7 @@ class UserMembershipModel {
   final String userId;
   final String membershipId;
   final MembershipModel? membership;
+  final String? gymTitle;
 
   UserMembershipModel({
     required this.id,
@@ -21,6 +22,7 @@ class UserMembershipModel {
     required this.userId,
     required this.membershipId,
     this.membership,
+    this.gymTitle
   });
 
   factory UserMembershipModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +44,34 @@ class UserMembershipModel {
       membership: json['membership'] != null
           ? MembershipModel.fromJson(json['membership'])
           : null,
+      gymTitle: json['gymTitle'],
+    );
+  }
+
+  // Add a copyWith method to create a new instance with updated properties
+  UserMembershipModel copyWith({
+    String? id,
+    DateTime? purchaseDate,
+    DateTime? startDate,
+    DateTime? expirationDate,
+    int? remainingSessions,
+    String? status,
+    String? userId,
+    String? membershipId,
+    MembershipModel? membership,
+    String? gymTitle,
+  }) {
+    return UserMembershipModel(
+      id: id ?? this.id,
+      purchaseDate: purchaseDate ?? this.purchaseDate,
+      startDate: startDate ?? this.startDate,
+      expirationDate: expirationDate ?? this.expirationDate,
+      remainingSessions: remainingSessions ?? this.remainingSessions,
+      status: status ?? this.status,
+      userId: userId ?? this.userId,
+      membershipId: membershipId ?? this.membershipId,
+      membership: membership ?? this.membership,
+      gymTitle: gymTitle ?? this.gymTitle,
     );
   }
 

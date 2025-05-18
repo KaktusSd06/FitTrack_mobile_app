@@ -7,6 +7,7 @@ import 'package:fittrack/presentation/widgets/features/history/service_history_w
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../data/services/gym_service.dart';
 import '../../../../data/services/purchases_service.dart';
 import '../../../widgets/features/history/good_history_widget.dart';
 import 'bloc/purchases_history_state.dart';
@@ -55,7 +56,7 @@ class _PurchasesHistoryScreenState extends State<PurchasesHistoryScreen> with Si
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PurchasesHistoryBloc(service: PurchaseMembershipService())..add(const GetPurchasesHistory()),
+      create: (context) => PurchasesHistoryBloc(service: PurchaseMembershipService(), gymService: GymService())..add(const GetPurchasesHistory()),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
