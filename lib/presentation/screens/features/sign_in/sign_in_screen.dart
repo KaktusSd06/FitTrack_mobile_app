@@ -5,6 +5,7 @@ import 'package:sign_button/constants.dart';
 import 'package:sign_button/create_button.dart';
 import '../../../dialogs/error_dialog.dart';
 import '../../home_screen.dart';
+import '../terms_of_use/terms_of_use_screen.dart';
 import 'bloc/sign_in_bloc.dart';
 import 'bloc/sign_in_event.dart';
 import 'bloc/sign_in_state.dart';
@@ -116,29 +117,34 @@ class SignInScreenContentState extends State<_SignInScreenContent> {
 
                   Spacer(),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Правила користування',
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          decoration: TextDecoration.underline,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TermsOfUseScreen()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Правила користування',
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 6,),
-                      SvgPicture.asset(
-                        "assets/icons/point.svg",
-                        width: 4.0,
-                        height: 4.0,
-                      ),
-                      SizedBox(width: 6,),
-                      Text(
-                        'Політика конфеденційності',
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          decoration: TextDecoration.underline,
+                        SizedBox(width: 6,),
+                        SvgPicture.asset(
+                          "assets/icons/point.svg",
+                          width: 4.0,
+                          height: 4.0,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 6,),
+                        Text(
+                          'Політика конфеденційності',
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    )
                   )
                 ],
               ),

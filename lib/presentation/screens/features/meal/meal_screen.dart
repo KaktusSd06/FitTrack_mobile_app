@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../dialogs/error_dialog.dart';
 import '../../../widgets/features/kcal/kcal_meal_screen_widget.dart';
+import '../message_from_trainer/message_screen.dart';
 import 'add_meal.dart';
 import 'chart/meal_chart_screen.dart';
 
@@ -184,7 +185,9 @@ class MealScreenState extends State<MealScreen> {
               height: 20,
             ),
             onPressed: () {
-              // Дія
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MessageScreen())
+              );
             },
           ),
           IconButton(

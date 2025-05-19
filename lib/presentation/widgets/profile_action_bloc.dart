@@ -44,6 +44,7 @@ class ActionBlock extends StatelessWidget {
                     svgPath,
                     width: 24.0,
                     height: 24.0,
+                    colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(width: 8.0),

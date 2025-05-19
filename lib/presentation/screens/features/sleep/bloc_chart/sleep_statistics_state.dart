@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../../../../../data/models/sleep_statistic_response.dart';
+
+import '../../../../../data/models/sleep/sleep_statistic_response.dart';
 
 abstract class SleepStatisticsState extends Equatable {
   const SleepStatisticsState();

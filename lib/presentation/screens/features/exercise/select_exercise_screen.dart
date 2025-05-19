@@ -160,6 +160,7 @@ class SelectExerciseScreenState extends State<SelectExerciseScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
+                      
                       MaterialPageRoute(
                         builder: (context) => CreateSetScreen(
                           exerciseId: exercise['id'].toString(),

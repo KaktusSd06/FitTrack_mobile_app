@@ -67,7 +67,7 @@ class _AddWaterInfoScreenState extends State<AddWaterInfoScreen> {
               SnackBar(
                 content: const Text('Воду додано успішно'),
                 behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.green,
+                backgroundColor: Theme.of(context).primaryColor,
                 margin: const EdgeInsets.all(16),
                 duration: const Duration(seconds: 2),
                 elevation: 6,

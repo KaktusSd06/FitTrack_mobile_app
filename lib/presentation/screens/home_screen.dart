@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fittrack/presentation/screens/features/club/club_screen.dart';
 import 'package:fittrack/presentation/screens/features/individual_training/individual_training_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -58,7 +59,7 @@ class HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     const PageWithIndicatorsScreen(),
     const IndividualTrainingScreen(),
-    const Center(child: Text("Мій клуб")),
+    const ClubScreen(),
     const ProfileScreen(),
   ];
 

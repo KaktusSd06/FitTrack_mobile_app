@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import '../../core/config/config.dart';
 import '../../core/config/secure_storage_keys.dart';
-import '../models/sleep_statistic_response.dart';
+import '../models/sleep/sleep_statistic_response.dart';
 
 class SleepStatisticsService {
   final secureStorage = const FlutterSecureStorage();
