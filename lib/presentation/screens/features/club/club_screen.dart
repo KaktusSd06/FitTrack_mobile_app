@@ -170,9 +170,29 @@ class ClubScreenState extends State<ClubScreen> {
                     WidgetWithTitle(title: "Групові тренування",
                       icon: "assets/icons/group_trainings.svg",
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (
-                            context) => GroupTrainingScreen(gymId: state.gym!.id)));
-                      },),
+                        Navigator.push(context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation,
+                                secondaryAnimation) => GroupTrainingScreen(gymId: state.gym!.id),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              final tween = Tween(begin: const Offset(1, 0.0),
+                                  end: Offset.zero);
+                              final curvedAnimation = CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeInOut,
+                              );
+
+                              return SlideTransition(
+                                position: tween.animate(curvedAnimation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+
+                    ),
                     const SizedBox(height: 16,),
                     WidgetWithTitle(title: "Магазин",
                       icon: "assets/icons/store.svg",

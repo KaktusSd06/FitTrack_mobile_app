@@ -51,7 +51,9 @@ class _AddWeightScreenState extends State<AddWeightScreen> {
         if (state is WeightAdded) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('Показник успішно додано'),
+              content: Text('Показник успішно додано',
+              style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor)
+                ,),
               backgroundColor: Theme.of(context).primaryColor,
               behavior: SnackBarBehavior.floating,
               margin: const EdgeInsets.all(16),

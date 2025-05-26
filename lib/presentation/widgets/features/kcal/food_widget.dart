@@ -46,6 +46,8 @@ class FoodWidget extends StatelessWidget {
               Text(
                 name,
                 style: Theme.of(context).textTheme.displaySmall,
+                softWrap: true,
+                overflow: TextOverflow.visible,
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,

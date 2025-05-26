@@ -67,7 +67,7 @@ class _WaterGoalScreenState extends State<WaterGoalScreen> {
           if (state is GoalAdded) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Text('Ціль змінено'),
+                content: Text('Ціль змінено', style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor)),
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Theme.of(context).primaryColor,
                 margin: const EdgeInsets.all(16),

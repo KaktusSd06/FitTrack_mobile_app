@@ -20,10 +20,10 @@ class TrainerCommentService {
       throw Exception('User ID not found in secure storage');
     }
 
+
     final queryParams = <String, String>{};
     if (date != null) {
-      final adjustedDate = date.add(const Duration(hours: 3));
-      queryParams['date'] = adjustedDate.toUtc().toIso8601String();
+      queryParams['date'] = date.toUtc().toIso8601String();
     }
 
     final uri = Uri.parse(

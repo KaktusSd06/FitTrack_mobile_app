@@ -73,8 +73,9 @@ class AddExerciseScreenState extends State<AddExerciseScreen> {
           if (state is ExercisesLoaded && _isSubmitting) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Text('Вправу успішно додано'),
+                content: Text('Вправу успішно додано', style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor)),
                 behavior: SnackBarBehavior.floating,
+                backgroundColor: Theme.of(context).primaryColor,
                 margin: const EdgeInsets.all(16),
                 elevation: 6,
                 shape: RoundedRectangleBorder(
