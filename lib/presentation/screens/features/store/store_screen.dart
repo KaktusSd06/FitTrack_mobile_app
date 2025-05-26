@@ -155,7 +155,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                   indicatorColor: Theme.of(context).primaryColor,
                   tabs: const [
                     Tab(text: 'Товари'),
-                    Tab(text: 'Абонименти'),
+                    Tab(text: 'Абонементи'),
                     Tab(text: 'Послуги'),
                   ],
                 ),

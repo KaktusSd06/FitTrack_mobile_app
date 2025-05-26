@@ -94,7 +94,7 @@ class _PurchasesHistoryScreenState extends State<PurchasesHistoryScreen> with Si
                   indicatorColor: Theme.of(context).primaryColor,
                   tabs: const [
                     Tab(text: 'Товари'),
-                    Tab(text: 'Абонименти'),
+                    Tab(text: 'Абонементи'),
                     Tab(text: 'Послуги'),
                   ],
                 ),
